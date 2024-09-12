@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>create product</title>
+    <link rel="stylesheet" href="/css/milligram.css" />
+  </head>
+  <body>
+    <div class="loading d-none" id="loader"></div>
+    <div class="container">
+      <label>Product Name</label>
+      <input id="product_name" type="text" />
+      <label>Product Code</label>
+      <input id="product_code" type="text" />
+      <label>Product Image</label>
+      <input id="product_image" type="text" />
+      <label>Unit Price</label>
+      <input id="unit_price" type="text" />
+      <label>Product Quantity</label>
+      <input id="product_quantity" type="text" />
+      <label>Product Total</label>
+      <input id="product_total" type="text" />
+      <button id="submit">Submit</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+      let product_name = document.getElementById("product_name");
+      let product_code = document.getElementById("product_code");
+      let product_image = document.getElementById("product_image");
+      let unit_price = document.getElementById("unit_price");
+      let product_quantity = document.getElementById("product_quantity");
+      let product_total = document.getElementById("product_total");
+      let submit = document.getElementById("submit");
+
+      let createProduct = async () => {
+        console.log();
+        let URL = `http://164.68.107.70:6060/api/v1/CreateProduct/`;
+
+        document.getElementById("loader").classList.remove("d-none");
+
+        let res = await axios.post(URL, {
+          Img: product_image.value,
+          ProductCode: product_code.value,
+          ProductName: product_name.value,
+          Qty: product_quantity.value,
+          TotalPrice: product_total.value,
+          UnitPrice: unit_price.value,
+        });
+
+        document.getElementById("loader").classList.add("d-none");
+
+        if (res.status === 200) {
+          window.location = "product.html";
+        }
+      };
+
+      submit.addEventListener("click", createProduct);
+    </script>
+  </body>
+</html>
